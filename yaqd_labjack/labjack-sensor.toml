@@ -1,0 +1,17 @@
+protocol = "labjack-sensor"
+doc = ""
+traits = ["is-daemon"]
+
+[links]
+source = "https://github.com/yaq-project/yaqd-labjack"
+bugtracker = "https://github.com/yaq-project/yaqd-labjack/-/issues"
+
+[installation]
+PyPI = "https://pypi.org/project/yaqd-labjack"
+
+[config]
+
+[state]
+
+[messages]
+
