@@ -31,7 +31,7 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         self._channel_names = [c.name for c in self._channels if c.enabled]
         self._channel_units = {k: "V" for k in self._channel_names}
         # hardware configuration
-        self._client = ModbusTcpClient("192.168.1.207")#self._config["address"])
+        self._client = ModbusTcpClient("192.168.1.207")  # self._config["address"])
         self._client.connect()
         self._client.read_holding_registers(0, 2)
         for c in self._channels:
@@ -40,8 +40,7 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
     async def _measure(self):
         out = dict()
         for c in self._channels:
-            response = self._client.read_holding_registers(address=c.modbus_address,
-                                                         count=2)
+            response = self._client.read_holding_registers(address=c.modbus_address, count=2)
             print(response)
             out[c.name] = data_to_float32(response.registers)
             await asyncio.sleep(0)

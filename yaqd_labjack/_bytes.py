@@ -1,7 +1,7 @@
-'''
+"""
 Helpful functions for converting register data to numbers and vice versa.
 
-'''
+"""
 
 import struct
 
@@ -15,7 +15,7 @@ def concatData(data):
     upper = True
     for reg in data:
         if upper:
-            tVal = ((reg & 0xFFFF) << 16)
+            tVal = (reg & 0xFFFF) << 16
             upper = False
         else:
             tVal = tVal | (reg & 0xFFFF)
@@ -23,9 +23,10 @@ def concatData(data):
     return tVal
 
 
-'''
+"""
 Converting numbers to 16-bit data arrays
-'''
+"""
+
 
 def uint16_to_data(num):
     return struct.unpack("=H", struct.pack("=H", num & 0xFFFF))[0]
@@ -33,15 +34,15 @@ def uint16_to_data(num):
 
 def uint32_to_data(num):
     data = [0, 0]
-    data[0] = struct.unpack("=H", struct.pack("=H", (num>>16)&0xffff))[0]
-    data[1] = struct.unpack("=H", struct.pack("=H", num&0xffff))[0]
+    data[0] = struct.unpack("=H", struct.pack("=H", (num >> 16) & 0xFFFF))[0]
+    data[1] = struct.unpack("=H", struct.pack("=H", num & 0xFFFF))[0]
     return data
 
 
 def int32_to_data(num):
     data = [0, 0]
-    data[0] = struct.unpack("=H", struct.pack("=H", (num >> 16) & 0xffff))[0]
-    data[1] = struct.unpack("=H", struct.pack("=H", num & 0xffff))[0]
+    data[0] = struct.unpack("=H", struct.pack("=H", (num >> 16) & 0xFFFF))[0]
+    data[1] = struct.unpack("=H", struct.pack("=H", num & 0xFFFF))[0]
     return data
 
 
@@ -53,9 +54,10 @@ def float32_to_data(num):
     return data
 
 
-'''
+"""
 Converting data arrays to numbers
-'''
+"""
+
 
 def data_to_uint16(data):
     return data[0]
