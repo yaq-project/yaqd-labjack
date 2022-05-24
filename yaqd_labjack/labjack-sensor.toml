@@ -1,6 +1,6 @@
 protocol = "labjack-sensor"
 doc = ""
-traits = ["is-daemon"]
+traits = ["has-measure-trigger", "is-sensor", "is-daemon"]
 
 [links]
 source = "https://github.com/yaq-project/yaqd-labjack"
@@ -9,9 +9,24 @@ bugtracker = "https://github.com/yaq-project/yaqd-labjack/-/issues"
 [installation]
 PyPI = "https://pypi.org/project/yaqd-labjack"
 
+[[types]]
+type = "record"
+name = "channel"
+fields = [{"name"="modbus_address", "type"="int"},
+          {"name"="enabled", "type"="boolean", "default"=true},
+          {"name"="range", "type"="float"}]
+
 [config]
+
+[config.channels]
+type = "map"
+values = "channel"
+default = {}
+
+[config.address]
+type = "string"
+default = "192.68.1.207"
 
 [state]
 
 [messages]
-
