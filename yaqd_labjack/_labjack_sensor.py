@@ -2,25 +2,46 @@ __all__ = ["LabjackSensor"]
 
 import asyncio
 from typing import Dict, Any, List
+from dataclasses import dataclass
+import struct
 
-from yaqd_core import IsDaemon
+from pymodbus.client.sync import ModbusTcpClient  # type: ignore
+from yaqd_core import HasMeasureTrigger, IsSensor, IsDaemon
+
+from ._bytes import *
 
 
-class LabjackSensor(IsDaemon):
+@dataclass
+class Channel:
+    name: str
+    modbus_address: int
+    range: float
+    enabled: bool
+
+
+class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
     _kind = "labjack-sensor"
 
     def __init__(self, name, config, config_filepath):
         super().__init__(name, config, config_filepath)
-        # Perform any unique initialization
+        self._channels = []
+        for k, d in self._config["channels"].items():
+            channel = Channel(**d, name=k)
+            self._channels.append(channel)
+        self._channel_names = [c.name for c in self._channels if c.enabled]
+        self._channel_units = {k: "V" for k in self._channel_names}
+        # hardware configuration
+        self._client = ModbusTcpClient("192.168.1.207")  # self._config["address"])
+        self._client.connect()
+        self._client.read_holding_registers(0, 2)
+        for c in self._channels:
+            self._client.write_registers(40_000 + c.modbus_address, float32_to_data(c.range))
 
-    async def update_state(self):
-        """Continually monitor and update the current daemon state."""
-        # If there is no state to monitor continuously, delete this function
-        while True:
-            # Perform any updates to internal state
-            self._busy = False
-            # There must be at least one `await` in this loop
-            # This one waits for something to trigger the "busy" state
-            # (Setting `self._busy = True)
-            # Otherwise, you can simply `await asyncio.sleep(0.01)`
-            await self._busy_sig.wait()
+    async def _measure(self):
+        out = dict()
+        for c in self._channels:
+            response = self._client.read_holding_registers(address=c.modbus_address, count=2)
+            print(response)
+            out[c.name] = data_to_float32(response.registers)
+            await asyncio.sleep(0)
+        return out
