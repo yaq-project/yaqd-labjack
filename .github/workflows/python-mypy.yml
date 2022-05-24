@@ -20,4 +20,4 @@ jobs:
         python -m pip install .
     - name: Run mypy
       run: |
-        mypy yaqd_dwyer
+        mypy yaqd_labjack
