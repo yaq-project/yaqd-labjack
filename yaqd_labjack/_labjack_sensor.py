@@ -39,6 +39,12 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         self._client.read_holding_registers(0, 2)
         for c in self._channels:
             self._client.write_registers(40_000 + c.modbus_address, float32_to_data(c.range))
+        # id
+        self.make = "LabJack"
+        response = self._client.read_holding_registers(address=60000, count=2)
+        self.model = str(data_to_float32(response.registers))
+        response = self._client.read_holding_registers(address=60028, count=2)
+        self.serial = str(data_to_int32(response.registers))
 
     async def _measure(self):
         out = dict()
