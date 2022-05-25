@@ -34,7 +34,7 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
             self._channel_names.append("device_temperature")
             self._channel_units["device_temperature"] = "K"
         # hardware configuration
-        self._client = ModbusTcpClient("192.168.1.207")  # self._config["address"])
+        self._client = ModbusTcpClient(self._config["address"])
         self._client.connect()
         self._client.read_holding_registers(0, 2)
         for c in self._channels:
