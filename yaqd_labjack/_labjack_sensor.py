@@ -30,6 +30,9 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
             self._channels.append(channel)
         self._channel_names = [c.name for c in self._channels if c.enabled]
         self._channel_units = {k: "V" for k in self._channel_names}
+        if self._config["read_device_temperature"]:
+            self._channel_names.append("device_temperature")
+            self._channel_units["device_temperature"] = "K"
         # hardware configuration
         self._client = ModbusTcpClient("192.168.1.207")  # self._config["address"])
         self._client.connect()
@@ -41,7 +44,12 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         out = dict()
         for c in self._channels:
             response = self._client.read_holding_registers(address=c.modbus_address, count=2)
-            print(response)
             out[c.name] = data_to_float32(response.registers)
             await asyncio.sleep(0)
+        if self._config["read_device_temperature"]:
+            response = self._client.read_holding_registers(address=60052, count=2)
+            out["device_temperature"] = data_to_float32(response.registers)
+            await asyncio.sleep(0)
+        if self._looping:
+            await asyncio.sleep(0.01)
         return out
