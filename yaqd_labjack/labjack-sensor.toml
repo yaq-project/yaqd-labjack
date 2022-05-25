@@ -25,7 +25,7 @@ default = {}
 
 [config.address]
 type = "string"
-default = "192.68.1.207"
+default = "192.168.1.207"
 
 [config.read_device_temperature]
 doc = "If true, an additional channel device_temperature with units kelvin will be added."
