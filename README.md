@@ -13,6 +13,7 @@ This package contains the following daemon(s):
 
 - https://yaq.fyi/daemons/labjack-sensor
 
-Maintainers:
+Maintainer(s):
 
-- This package is currently unmaintained!
+- [Blaise Thompson](https://github.com/untzag)
+
