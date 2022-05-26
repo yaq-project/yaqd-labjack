@@ -83,6 +83,9 @@
         }
     },
     "doc": "",
+    "hardware": [
+        "labjack:t7-pro"
+    ],
     "installation": {
         "PyPI": "https://pypi.org/project/yaqd-labjack"
     },
