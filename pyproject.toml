@@ -9,7 +9,7 @@ author = "yaq developers"
 home-page = "https://yaq.fyi"
 description-file = "README.md"
 requires-python = ">=3.7"
-requires = ["pymodbus", "yaqd-core>=2020.06.3"]
+requires = ["pymodbus>=3", "yaqd-core>=2020.06.3"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Science/Research",
@@ -18,6 +18,8 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Scientific/Engineering",
 ]
 
@@ -29,6 +31,7 @@ Issues = "https://github.com/yaq-project/yaqd-labjack/issues"
 dev = ["black", "pre-commit"]
 
 [tool.flit.scripts]
+yaqd-digital-output = "yaqd_labjack._labjack_digital_output:LabjackDigitaloutput.main"
 yaqd-labjack-sensor = "yaqd_labjack._labjack_sensor:LabjackSensor.main"
 
 

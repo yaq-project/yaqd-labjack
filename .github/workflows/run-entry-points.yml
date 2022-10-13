@@ -25,5 +25,7 @@ jobs:
         python -m pip install --upgrade .
     - name: Test with pytest
       run: |
+        yaqd-labjack-digital-output --version
+        yaqd-labjack-digital-output --help
         yaqd-labjack-sensor --version
         yaqd-labjack-sensor --help

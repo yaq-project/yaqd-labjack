@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 from dataclasses import dataclass
 import struct
 
-from pymodbus.client.sync import ModbusTcpClient  # type: ignore
+from pymodbus.client.TCP import ModbusTcpClient  # type: ignore
 from yaqd_core import HasMeasureTrigger, IsSensor, IsDaemon
 
 from ._bytes import *
