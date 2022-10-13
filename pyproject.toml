@@ -31,7 +31,7 @@ Issues = "https://github.com/yaq-project/yaqd-labjack/issues"
 dev = ["black", "pre-commit"]
 
 [tool.flit.scripts]
-yaqd-digital-output = "yaqd_labjack._labjack_digital_output:LabjackDigitaloutput.main"
+yaqd-labjack-digital-output = "yaqd_labjack._labjack_digital_output:LabjackDigitaloutput.main"
 yaqd-labjack-sensor = "yaqd_labjack._labjack_sensor:LabjackSensor.main"
 
 
