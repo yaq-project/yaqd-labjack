@@ -22,7 +22,7 @@ class LabjackDigitalOutput(IsDiscrete, HasPosition, IsDaemon):
             if config["pin_type"] == "FIO":
                 self._position_identifiers = {"low": 0.0, "high": 1.0}
             elif config["pin_type"] == "DAC":
-                self._position_identifiers = {"low": 0.0, "high": 5.}
+                self._position_identifiers = {"low": 0.0, "high": 5.0}
             if config["invert"]:
                 self._position_identifiers["low"] = self._position_identifiers["high"]
                 self._position_identifiers["high"] = 0.0
@@ -43,7 +43,7 @@ class LabjackDigitalOutput(IsDiscrete, HasPosition, IsDaemon):
 
     async def _set_position_later(self, value):
         while True:
-           await self._busy_sig.wait()
+            await self._busy_sig.wait()
 
     async def update_state(self):
         while True:
