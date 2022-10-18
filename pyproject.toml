@@ -9,7 +9,10 @@ author = "yaq developers"
 home-page = "https://yaq.fyi"
 description-file = "README.md"
 requires-python = ">=3.7"
-requires = ["pymodbus>=3", "yaqd-core>=2020.06.3"]
+requires = ["pymodbus>=3",
+            "yaqd-core>=2020.06.3",
+	    "pyserial-asyncio",  # remove this in future release https://github.com/riptideio/pymodbus/pull/1114
+	    ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Science/Research",
