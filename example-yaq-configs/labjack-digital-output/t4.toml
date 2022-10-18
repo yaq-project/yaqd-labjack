@@ -1,0 +1,39 @@
+[outlet1]
+port = 39100
+address = "192.168.1.204"
+modbus_address = 1000
+pin_type = "DAC"
+
+[outlet2]
+port = 39101
+address = "192.168.1.204"
+modbus_address = 1002
+pin_type = "DAC"
+
+[outlet3]
+port = 39102
+address = "192.168.1.204"
+modbus_address = 2004
+invert = true
+pin_type = "FIO"
+
+[outlet4]
+port = 39103
+address = "192.168.1.204"
+modbus_address = 2005
+invert = true
+pin_type = "FIO"
+
+[outlet5]
+port = 39104
+address = "192.168.1.204"
+modbus_address = 2006
+invert = true
+pin_type = "FIO"
+
+[outlet6]
+port = 39105
+address = "192.168.1.204"
+modbus_address = 2007
+invert = true
+pin_type = "FIO"
