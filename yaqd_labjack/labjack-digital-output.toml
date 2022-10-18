@@ -1,0 +1,34 @@
+protocol = "labjack-digital-output"
+doc = ""
+traits = ["is-discrete", "has-position", "is-daemon"]
+hardware = ["labjack:t4"]
+
+[links]
+source = "https://github.com/yaq-project/yaqd-labjack"
+bugtracker = "https://github.com/yaq-project/yaqd-labjack/-/issues"
+
+[installation]
+PyPI = "https://pypi.org/project/yaqd-labjack"
+
+[config]
+
+[config.address]
+doc = "TCP address of labjack. For T4, default is 192.168.1.204"
+type = "string"
+
+[config.modbus_address]
+doc = "Modbus address, refer to LabJack documentation."
+type = "int"
+
+[config.invert]
+doc = "Set to true to invert the sense of this pin. This does nothing if identifiers is set in config."
+type = "boolean"
+default = false
+
+[config.pin_type]
+doc = "Daemon will work slightly differently for DAC vs FIO."
+type = {"type" = "enum", "name" = "pin_type", "symbols" = ["FIO", "DAC"]}
+
+[state]
+
+[messages]

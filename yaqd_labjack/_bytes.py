@@ -68,8 +68,8 @@ def data_to_uint32(data):
 
 
 def data_to_int32(data):
-    return struct.unpack("=i", struct.pack("=I", concatData(data)))[0]
+    return struct.unpack(">i", struct.pack(">I", concatData(data)))[0]
 
 
 def data_to_float32(data):
-    return struct.unpack("=f", struct.pack("=I", concatData(data)))[0]
+    return struct.unpack(">f", struct.pack(">I", concatData(data)))[0]
