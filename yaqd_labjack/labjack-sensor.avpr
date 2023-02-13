@@ -226,6 +226,33 @@
     ],
     "types": [
         {
+            "name": "feature",
+            "symbols": [
+                "none",
+                "offset_and_slope",
+                "max_min_avg",
+                "resistance",
+                "average_and_threshold",
+                "rms_flex",
+                "flex_rms",
+                "thermocouple_type_e",
+                "thermocouple_type_j",
+                "thermocouple_type_k",
+                "thermocouple_type_r",
+                "thermocouple_type_t",
+                "thermocouple_type_s",
+                "thermocouple_type_n",
+                "thermocouple_type_b",
+                "thermocouple_type_c",
+                "rtd_pt100",
+                "rtd_pt500",
+                "rtd_pt1000",
+                "thermistor_steinhart_hart",
+                "thermistor_beta"
+            ],
+            "type": "enum"
+        },
+        {
             "fields": [
                 {
                     "name": "modbus_address",
@@ -239,6 +266,16 @@
                 {
                     "name": "range",
                     "type": "float"
+                },
+                {
+                    "default": true,
+                    "name": "differential",
+                    "type": "boolean"
+                },
+                {
+                    "default": "none",
+                    "name": "extended_feature",
+                    "type": "feature"
                 }
             ],
             "name": "channel",
