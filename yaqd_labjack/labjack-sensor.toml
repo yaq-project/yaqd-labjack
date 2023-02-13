@@ -21,7 +21,7 @@ type = "record"
 name = "channel"
 fields = [{"name"="modbus_address", "type"="int"},
           {"name"="modbus_type", "type"="modbus_type"},
-	  {"name"="units", "type"=["string", "null"], "default"="__null__"
+	  {"name"="units", "type"=["string", "null"], "default"="__null__"}
           {"name"="enabled", "type"="boolean", "default"=true}]
 
 [[types]]
