@@ -54,7 +54,7 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         # extended features
         for c in self._channels:
             uint = EF_INDEX[c.extended_feature]
-            self._client.write_registers(9_000, + c.modbus_address, uint32_to_data(uint))
+            self._client.write_registers(9_000 + c.modbus_address, uint32_to_data(uint))
         # id
         self.make = "LabJack"
         response = self._client.read_holding_registers(address=60000, count=2)
