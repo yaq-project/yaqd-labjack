@@ -46,11 +46,13 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         # differential
         for c in self._channels:
             if c.differential:
-                self._client.write_registers(AIN_NEGATIVE_CH + c.modbus_address,
-                                             uint16_to_data(c.modbus_address + 1))
+                self._client.write_registers(
+                    AIN_NEGATIVE_CH + c.modbus_address, uint16_to_data(c.modbus_address + 1)
+                )
             else:
-                self._client.write_registers(AIN_NEGATIVE_CH + c.modbus_address,
-                                             unit16_to_data(199))  # default: single ended
+                self._client.write_registers(
+                    AIN_NEGATIVE_CH + c.modbus_address, unit16_to_data(199)
+                )  # default: single ended
         # extended features
         for c in self._channels:
             uint = EF_INDEX[c.extended_feature]
