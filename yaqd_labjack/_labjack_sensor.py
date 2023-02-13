@@ -9,6 +9,7 @@ from pymodbus.client import ModbusTcpClient  # type: ignore
 from yaqd_core import HasMeasureTrigger, IsSensor, IsDaemon
 
 from ._bytes import *
+from ._constants import *
 
 
 @dataclass
@@ -17,6 +18,8 @@ class Channel:
     modbus_address: int
     range: float
     enabled: bool
+    differential: bool
+    extended_feature: str
 
 
 class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
@@ -37,8 +40,21 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         self._client = ModbusTcpClient(self._config["address"])
         self._client.connect()
         self._client.read_holding_registers(0, 2)
+        # range
         for c in self._channels:
-            self._client.write_registers(40_000 + c.modbus_address, float32_to_data(c.range))
+            self._client.write_registers(AIN_RANGE + c.modbus_address, float32_to_data(c.range))
+        # differential
+        for c in self._channels:
+            if c.differential:
+                self._client.write_registers(AIN_NEGATIVE_CH + c.modbus_address,
+                                             uint16_to_data(c.modbus_address + 1))
+            else:
+                self._client.write_registers(AIN_NEGATIVE_CH + c.modbus_address,
+                                             unit16_to_data(199))  # default: single ended
+        # extended features
+        for c in self._channels:
+            uint = EF_INDEX[c.extended_feature]
+            self._client.write_registers(9_000, + c.modbus_address, uint32_to_data(uint))
         # id
         self.make = "LabJack"
         response = self._client.read_holding_registers(address=60000, count=2)
