@@ -42,7 +42,9 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
             setting = Setting(**d, name=k)
             self._settings.append(setting)
         self._channel_names = [c.name for c in self._channels if c.enabled]
-        self._channel_units = {k: self._config["channels"][k]["units"] for k in self._channel_names}
+        self._channel_units = {
+            k: self._config["channels"][k]["units"] for k in self._channel_names
+        }
         if self._config["read_device_temperature"]:
             self._channel_names.append("device_temperature")
             self._channel_units["device_temperature"] = "K"
