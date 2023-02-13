@@ -54,6 +54,19 @@ def float32_to_data(num):
     return data
 
 
+def type_to_data(type, num):
+    if type == "unit16":
+        return uint16_to_data(num)
+    elif type == "uint32":
+        return uint32_to_data(num)
+    elif type == "int32":
+        return int32_to_data(num)
+    elif type == "float32":
+        return float32_to_data(num)
+    else:
+        raise KeyError("type not recognized in type_to_data")
+
+
 """
 Converting data arrays to numbers
 """
@@ -73,3 +86,16 @@ def data_to_int32(data):
 
 def data_to_float32(data):
     return struct.unpack(">f", struct.pack(">I", concatData(data)))[0]
+
+
+def data_to_type(data, type):
+    if type == "unit16":
+        return data_to_uint16(data)
+    elif type == "uint32":
+        return data_to_uint32(data)
+    elif type == "int32":
+        return data_to_int32(data)
+    elif type == "float32":
+        return data_to_float32(data)
+    elise:
+    raise KeyError("type not recognized in data_to_type")

@@ -19,6 +19,16 @@ class Channel:
     enabled: bool
 
 
+@dataclass
+class Setting:
+    name: str
+    modbus_address: int
+    modbus_type: str
+    value: Any
+    comment: str
+    enabled: bool
+
+
 class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
     _kind = "labjack-sensor"
 
@@ -28,8 +38,11 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         for k, d in self._config["channels"].items():
             channel = Channel(**d, name=k)
             self._channels.append(channel)
+        for k, d in self._config["settings"].items():
+            setting = Setting(**d, name=k)
+            self._settings.append(setting)
         self._channel_names = [c.name for c in self._channels if c.enabled]
-        self._channel_units = {k: "V" for k in self._channel_names}
+        self._channel_units = {k: self._config["channels"][k]["units"] for k in self._channel_names}
         if self._config["read_device_temperature"]:
             self._channel_names.append("device_temperature")
             self._channel_units["device_temperature"] = "K"
@@ -37,14 +50,14 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         self._client = ModbusTcpClient(self._config["address"])
         self._client.connect()
         self._client.read_holding_registers(0, 2)
-        for c in self._channels:
-            self._client.write_registers(40_000 + c.modbus_address, float32_to_data(c.range))
         # id
         self.make = "LabJack"
         response = self._client.read_holding_registers(address=60000, count=2)
         self.model = str(data_to_float32(response.registers))
         response = self._client.read_holding_registers(address=60028, count=2)
         self.serial = str(data_to_int32(response.registers))
+        # launch settings setter
+        self._loop.create_task(self._set_settings())
 
     async def _measure(self):
         out = dict()
@@ -59,3 +72,11 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         if self._looping:
             await asyncio.sleep(0.01)
         return out
+
+    async def _set_settings(self):
+        while True:
+            for setting in self._settings:
+                data = type_to_data(setting.modbus_type, setting.value)
+                self._client.write_registers(setting.modbus_address, data)
+                await asyncio.sleep(1)
+            await asyncio.sleep(60)

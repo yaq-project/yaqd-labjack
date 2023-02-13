@@ -12,11 +12,26 @@ example-configs = "https://github.com/yaq-project/yaqd-labjack/tree/main/example
 PyPI = "https://pypi.org/project/yaqd-labjack"
 
 [[types]]
+type = "enum"
+name = "modbus_type"
+symbols = ["float32", "unit16", "uint32", "int32"]
+
+[[types]]
 type = "record"
 name = "channel"
 fields = [{"name"="modbus_address", "type"="int"},
-          {"name"="enabled", "type"="boolean", "default"=true},
-          {"name"="range", "type"="float"}]
+          {"name"="modbus_type", "type"="modbus_type"},
+	  {"name"="units", "type"=["string", "null"], "default"="__null__"
+          {"name"="enabled", "type"="boolean", "default"=true}]
+
+[[types]]
+type = "record"
+name = "setting"
+fields = [{"name"="modbus_address", "type"="int"},
+          {"name"="modbus_type", "type"="modbus_type"},
+	  {"name"="value", "type"=["double", "long"]},
+	  {"name"="comment", "type"="string", "doc"="comment for human consumption"},
+          {"name"="enabled", "type"="boolean", "default"=true}]
 
 [config]
 
@@ -24,6 +39,12 @@ fields = [{"name"="modbus_address", "type"="int"},
 type = "map"
 values = "channel"
 default = {}
+
+[config.settings]
+type = "map"
+values = "setting"
+default = {}
+doc = "All settings will be written roughly once per minute."
 
 [config.address]
 type = "string"
