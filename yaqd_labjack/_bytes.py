@@ -97,5 +97,5 @@ def data_to_type(data, type):
         return data_to_int32(data)
     elif type == "float32":
         return data_to_float32(data)
-    elise:
-    raise KeyError("type not recognized in data_to_type")
+    else:
+        raise KeyError("type not recognized in data_to_type")
