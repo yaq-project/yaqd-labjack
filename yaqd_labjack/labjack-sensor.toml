@@ -14,7 +14,7 @@ PyPI = "https://pypi.org/project/yaqd-labjack"
 [[types]]
 type = "enum"
 name = "modbus_type"
-symbols = ["float32", "unit16", "uint32", "int32"]
+symbols = ["float32", "uint16", "uint32", "int32"]
 
 [[types]]
 type = "record"
@@ -41,9 +41,9 @@ values = "channel"
 default = {}
 
 [config.settings]
-type = "map"
-values = "setting"
-default = {}
+type = "array"
+items = "setting"
+default = []
 doc = "All settings will be written roughly once per minute."
 
 [config.address]

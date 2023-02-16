@@ -55,16 +55,16 @@ def float32_to_data(num):
 
 
 def type_to_data(type, num):
-    if type == "unit16":
-        return uint16_to_data(num)
+    if type == "uint16":
+        return uint16_to_data(int(num))
     elif type == "uint32":
-        return uint32_to_data(num)
+        return uint32_to_data(int(num))
     elif type == "int32":
         return int32_to_data(num)
     elif type == "float32":
         return float32_to_data(num)
     else:
-        raise KeyError("type not recognized in type_to_data")
+        raise KeyError(f"type {type} not recognized in type_to_data")
 
 
 """
@@ -98,4 +98,4 @@ def data_to_type(data, type):
     elif type == "float32":
         return data_to_float32(data)
     else:
-        raise KeyError("type not recognized in data_to_type")
+        raise KeyError(f"type {type} not recognized in data_to_type")

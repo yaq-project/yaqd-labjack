@@ -82,10 +82,10 @@
             ]
         },
         "settings": {
-            "default": {},
+            "default": [],
             "doc": "All settings will be written roughly once per minute.",
-            "type": "map",
-            "values": "setting"
+            "items": "setting",
+            "type": "array"
         }
     },
     "doc": "",
@@ -235,7 +235,7 @@
             "name": "modbus_type",
             "symbols": [
                 "float32",
-                "unit16",
+                "uint16",
                 "uint32",
                 "int32"
             ],
@@ -250,6 +250,19 @@
                 {
                     "name": "modbus_type",
                     "type": "modbus_type"
+                },
+                {
+                    "default": null,
+                    "name": "units",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                {
+                    "default": true,
+                    "name": "enabled",
+                    "type": "boolean"
                 }
             ],
             "name": "channel",

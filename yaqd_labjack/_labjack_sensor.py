@@ -15,13 +15,13 @@ from ._bytes import *
 class Channel:
     name: str
     modbus_address: int
-    range: float
+    modbus_type: str
+    units: str
     enabled: bool
 
 
 @dataclass
 class Setting:
-    name: str
     modbus_address: int
     modbus_type: str
     value: Any
@@ -34,12 +34,15 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
 
     def __init__(self, name, config, config_filepath):
         super().__init__(name, config, config_filepath)
+        print(self._config["channels"])
         self._channels = []
         for k, d in self._config["channels"].items():
+            print(d)
             channel = Channel(**d, name=k)
             self._channels.append(channel)
-        for k, d in self._config["settings"].items():
-            setting = Setting(**d, name=k)
+        self._settings = []
+        for d in self._config["settings"]:
+            setting = Setting(**d)
             self._settings.append(setting)
         self._channel_names = [c.name for c in self._channels if c.enabled]
         self._channel_units = {
@@ -79,6 +82,7 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
         while True:
             for setting in self._settings:
                 data = type_to_data(setting.modbus_type, setting.value)
+                print(setting.modbus_address, data)
                 self._client.write_registers(setting.modbus_address, data)
                 await asyncio.sleep(1)
             await asyncio.sleep(60)
