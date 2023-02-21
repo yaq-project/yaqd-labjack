@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### changed
+- ability to set other modbus addresses w/ sensor
+### Added
+- config file (Landis sensor)
+
 ## [2022.10.0]
 
 ### Added

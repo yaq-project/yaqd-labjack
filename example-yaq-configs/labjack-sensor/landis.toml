@@ -1,0 +1,50 @@
+[daq]
+address = "192.168.1.207"
+port = 37000
+loop_at_startup = true
+
+[[daq.settings]]
+comment = "ai0 range"
+modbus_address = 40000
+modbus_type = "float32"
+value = 0.1
+
+[[daq.settings]]
+comment = "ai0 differential"
+modbus_address = 41000
+modbus_type = "uint16"
+value = 1
+
+[[daq.settings]]
+comment = "ai0 full resolution"
+modbus_address = 41500
+modbus_type = "uint16"
+value = 12
+
+[[daq.settings]]
+comment = "temperature range"
+modbus_address = 40002
+modbus_type = "float32"
+value = 0.1
+
+[[daq.settings]]
+comment = "ai2 thermocouple type k"
+modbus_address = 9004
+modbus_type = "uint32"
+value = 22
+
+[[daq.settings]]
+comment = "ai2 full resolution"
+modbus_address = 41504
+modbus_type = "uint16"
+value = 12
+
+[daq.channels.flux]
+modbus_address = 0
+modbus_type = "float32"
+units = "V"
+
+[daq.channels.temperature]
+modbus_address = 7004
+modbus_type = "float32"
+units = "K"
