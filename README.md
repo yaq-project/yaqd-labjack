@@ -9,8 +9,9 @@
 
 yaq daemons for LabJack measurement devices
 
-This package contains the following daemon(s):
+This package contains the following daemons:
 
+- https://yaq.fyi/daemons/labjack-digital-output
 - https://yaq.fyi/daemons/labjack-sensor
 
 Maintainer(s):
