@@ -1,0 +1,26 @@
+protocol = "labjack-analog-output"
+doc = ""
+traits = ["is-discrete", "has-position", "is-daemon"]
+hardware = ["labjack:t4", "labjack:t7"]
+
+[links]
+source = "https://github.com/yaq-project/yaqd-labjack"
+bugtracker = "https://github.com/yaq-project/yaqd-labjack/-/issues"
+example-configs = "https://github.com/yaq-project/yaqd-labjack/tree/main/example-yaq-configs/labjack-digital-output"
+
+[installation]
+PyPI = "https://pypi.org/project/yaqd-labjack"
+
+[config]
+
+[config.address]
+doc = "TCP address of labjack. For T4, default is 192.168.1.204"
+type = "string"
+
+[config.modbus_address]
+doc = "Modbus address, refer to LabJack documentation."
+type = "int"
+
+[state]
+
+[messages]
