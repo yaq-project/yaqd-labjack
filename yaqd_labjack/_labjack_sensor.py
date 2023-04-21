@@ -9,6 +9,7 @@ from pymodbus.client import ModbusTcpClient  # type: ignore
 from yaqd_core import HasMeasureTrigger, IsSensor, IsDaemon
 
 from ._bytes import *
+from ._io import clients
 
 
 @dataclass
@@ -52,7 +53,11 @@ class LabjackSensor(HasMeasureTrigger, IsSensor, IsDaemon):
             self._channel_names.append("device_temperature")
             self._channel_units["device_temperature"] = "K"
         # hardware configuration
-        self._client = ModbusTcpClient(self._config["address"])
+        if self._config["address"] in clients:
+            self._client = clients[self._config["address"]]
+        else:
+            self._client = ModbusTcpClient(config["address"])
+            clients[self._config["address"]] = self._client
         self._client.connect()
         self._client.read_holding_registers(0, 2)
         # id

@@ -7,6 +7,7 @@ from pymodbus.client import ModbusTcpClient  # type: ignore
 from yaqd_core import IsDiscrete, HasPosition, IsDaemon
 
 from ._bytes import *
+from ._io import clients
 
 
 class LabjackDigitalOutput(IsDiscrete, HasPosition, IsDaemon):
@@ -27,11 +28,11 @@ class LabjackDigitalOutput(IsDiscrete, HasPosition, IsDaemon):
                 self._position_identifiers["low"] = self._position_identifiers["high"]
                 self._position_identifiers["high"] = 0.0
         #
-        if self._config["address"] in LabjackDigitalOutput.clients:
-            self._client = LabjackDigitalOutput.clients[self._config["address"]]
+        if self._config["address"] in clients:
+            self._client = clients[self._config["address"]]
         else:
             self._client = ModbusTcpClient(config["address"])
-            LabjackDigitalOutput.clients[self._config["address"]] = self._client
+            clients[self._config["address"]] = self._client
 
     def _set_position(self, value: float) -> None:
         if self._config["pin_type"] == "FIO":

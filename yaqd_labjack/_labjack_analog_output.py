@@ -7,21 +7,20 @@ from pymodbus.client import ModbusTcpClient  # type: ignore
 from yaqd_core import IsDiscrete, HasPosition, IsDaemon
 
 from ._bytes import *
+from ._io import clients
 
 
 class LabjackAnalogOutput(IsDiscrete, HasPosition, IsDaemon):
     _kind = "labjack-analog-output"
 
-    clients: Dict[str, ModbusTcpClient] = {}
-
     def __init__(self, name, config, config_filepath):
         super().__init__(name, config, config_filepath)
         #
-        if self._config["address"] in LabjackAnalogOutput.clients:
-            self._client = LabjackDigitalOutput.clients[self._config["address"]]
+        if self._config["address"] in clients:
+            self._client = clients[self._config["address"]]
         else:
             self._client = ModbusTcpClient(config["address"])
-            LabjackDigitalOutput.clients[self._config["address"]] = self._client
+            clients[self._config["address"]] = self._client
 
     def _set_position(self, value: float) -> None:
         self._client.write_registers(self._config["modbus_address"], float32_to_data(value))
