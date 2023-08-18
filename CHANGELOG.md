@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2023.8.0]
+
+### Changed
+- pinned to pymodbus 3.2.2, unsure why upstream has broken us
+
 ## [2023.2.0]
 
 ### Changed
@@ -23,7 +28,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/yaq-project/yaqd-labjack/-/compare/v2023.2.0...main
+[Unreleased]: https://github.com/yaq-project/yaqd-labjack/-/compare/v2023.8.0...main
+[2023.8.0]: https://github.com/yaq-project/yaqd-labjack/-/compare/v2023.2.0...v2023.8.0
 [2023.2.0]: https://github.com/yaq-project/yaqd-labjack/-/compare/v2022.10.0...v2023.2.0
 [2022.10.0]: https://github.com/yaq-project/yaqd-labjack/-/compare/v2022.5.0...v2022.10.0
 [2022.5.0]: https://github.com/yaq-project/yaqd-labjack/-/tags/v2022.5.0
